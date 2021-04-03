@@ -2,15 +2,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import *
 from .forms import PostForm,categoryForm
-# from django.contrib.auth.models import User, auth
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-# from rest_framework import viewsets
-# from rest_framework import permissions
-# from .serializers import PostSerializer
-# from rest_framework import generics
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+import random
+import numpy as np
 User = get_user_model()
 
 # Create your views here.
@@ -138,3 +135,23 @@ def userdetail(request, pk):
 	print(user.image,'1111111111')
 	# userimg=  Userprofile.objects.filter(user= request.user).first()
 	return render(request, 'blog/userdetail.html',{'user':user})
+
+def randomlist():
+	random_list = np.random.randint(60, size=(87))
+	return random_list
+
+def uniquelist(random_list):
+	unique_list = list(set(random_list))
+	return unique_list
+
+def main(request):
+    random_list = randomlist()
+    unique_list = uniquelist(random_list)
+    K=15
+    new_unique_list = list(map(lambda x : x + K, unique_list))
+    odd_list = list(filter(lambda x: (x%2 != 0) , new_unique_list))
+    even_list = list(filter(lambda x: (x%2 == 0) , new_unique_list))
+    odd_list_sum = sum(odd_list)
+    even_list_sum = sum(even_list)
+    return render(request, 'blog/randomlist.html',{'random_list':random_list,'unique_list':unique_list,'new_unique_list':new_unique_list,'odd_list':odd_list,'even_list':even_list,'odd_list_sum':odd_list_sum,'even_list_sum':even_list_sum})
+

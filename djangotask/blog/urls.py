@@ -21,6 +21,8 @@ urlpatterns = [
     path('tag/', views.tag_list, name ='tag_list'),
     path('login/',views.login, name="login"),
     path('', views.post_list, name ='post_list'),
+    path('list/', views.main, name ='main'),
+    # path('ulist/', views.uniquelist, name ='uniquelist'),
 
     
 ]

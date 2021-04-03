@@ -7,6 +7,16 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework import pagination
+from django_filters import rest_framework as filters
+
+class PostFilter(filters.FilterSet):
+    created_date = filters.DateFilter(field_name="created_date", lookup_expr='contains')
+    published_date = filters.DateFilter(field_name="published_date", lookup_expr='contains')
+    text = filters.CharFilter(field_name="text", lookup_expr='icontains')
+    # category_text = filters.ModelMultipleChoiceFilter(queryset=Category.objects.all(),field_name="category__text",to_field_name="text",widget=CheckboxSelectMultiple(),label="Category",label_suffix="",)
+    class Meta:
+        model = Post
+        fields = ['tag', 'category','author','title','text', 'created_date', 'published_date']
 
 class PostViewSet(viewsets.ModelViewSet	):
     """
@@ -14,6 +24,9 @@ class PostViewSet(viewsets.ModelViewSet	):
     """
     queryset = Post.objects.all().order_by('-published_date')
     serializer_class = PostSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    # filterset_fields = ('tag', 'category','author','title','text','created_date','published_date')
+    filterset_class = PostFilter
     # permission_classes = [permissions.IsAuthenticated] 
     http_method_names = ['get','post','put','patch','delete']
 
