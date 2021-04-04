@@ -8,6 +8,7 @@ from autoslug import AutoSlugField
 # Create your models here.
 
 gender = (('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other'))
+slots = (("slot1", "slot1"), ("slot2", "slot2"), ("slot3", "slot3"), ("slot4", "slot4"))
 status = (("Active", "Active"), ("Inactive", "Inactive"), ("Delete", "Delete"))
 
 class User(AbstractUser):
@@ -70,3 +71,15 @@ class Post(models.Model):
 	def slugify_function(self, content):
 		return content.replace('_', '-').lower()
 
+class Appoitment(models.Model):
+	name = models.CharField(max_length=100)
+	text = models.TextField()
+	date = models.DateField()
+	slot1 = models.TimeField(default='09:00:00')
+	slot2 = models.TimeField(default='11:00:00')
+	slot3 = models.TimeField(default='14:00:00')
+	slot4 = models.TimeField(default='16:00:00')
+	slot = models.CharField(max_length=20, choices=slots, default='slot1')
+
+	def __str__(self):
+		return str(self.name)

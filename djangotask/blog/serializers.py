@@ -1,4 +1,4 @@
-from .models import Post,Category,Tag
+from .models import Post,Category,Tag,Appoitment
 from rest_framework import serializers
 import json
 
@@ -41,3 +41,8 @@ class TagSerializer(serializers.ModelSerializer):
 # 	class Meta:
 # 		model = Comment
 # 		fields = ['post','name', 'text','created','updated','active','parent']
+
+class AppoitmentSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Appoitment
+		fields = ['id','name', 'text','date','slot']

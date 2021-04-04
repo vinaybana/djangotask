@@ -8,6 +8,7 @@ router = DefaultRouter()
 router.register('post', api.PostViewSet)
 router.register('category', api.CategoryViewSet)
 router.register('tag', api.TagViewSet)
+router.register('appoitment', api.AppoitmentViewSet)
 # router.register('comment', api.CommentViewSet)
 
 urlpatterns = [

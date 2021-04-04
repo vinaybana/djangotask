@@ -6,8 +6,19 @@
         <p>{{ category.text|linebreaksbr }}</p>
         {% for post in posts%}
         <div class="post">
-        	 <h2><a href="{% url 'blog:post_detail' slug=post.slug %}">{{ post.title }}</a></h2>
+        	<h2><a href="{% url 'blog:post_detail' slug=post.slug %}">{{ post.title }}</a></h2>
+        	<p>{{ post.text }}</p>
         </div>
         {% endfor %}
     </div>
+    <div class="row">
+	    <div class="col">
+			<div class="card card-body">
+				<form method="get">
+			        {{tableFilter.form}}
+			        <button class="btn btn-primary" type="submit">Search</button>
+				</form>
+			</div>
+	    </div>
+	</div>
 {% endblock %}

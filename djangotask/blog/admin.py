@@ -66,8 +66,18 @@ class TagAdmin(admin.ModelAdmin):
 	# filter_horizontal = ('tag',)
 	prepopulated_fields = {'slug':("title",)}
 
+class AppoitmentAdmin(admin.ModelAdmin):
+	fieldsets = [
+		(None, {'fields': ['name','text','date','slot']})
+
+	]
+	
+	list_display = ('name', 'text','date','slot')
+		
+
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Post,PostAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag,TagAdmin)
+admin.site.register(Appoitment,AppoitmentAdmin)

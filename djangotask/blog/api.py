@@ -44,3 +44,8 @@ class TagViewSet(viewsets.ModelViewSet):
 # 	queryset = Comment.objects.all()
 # 	serializer_class = CommentSerializer
 # 	http_method_names = ['get','post','put','patch','delete']
+
+class AppoitmentViewSet(viewsets.ModelViewSet):
+    queryset = Appoitment.objects.all()
+    serializer_class = AppoitmentSerializer
+    http_method_names = ['get','post','put','patch','delete']

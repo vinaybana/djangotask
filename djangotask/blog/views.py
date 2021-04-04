@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import random
 import numpy as np
+from .api import PostFilter
 User = get_user_model()
 
 # Create your views here.
@@ -18,10 +19,10 @@ def category_list(request):
 
 def category_detail(request,slug):
 	category = get_object_or_404(Category, slug=slug)
-	print(category)
 	posts= Post.objects.filter(category=category)
-	print(posts)
-	return render(request, 'blog/category_detail.html', {'posts': posts, 'category':category})
+	tableFilter = PostFilter(request.GET, queryset=posts)
+	# posts = myFilter.qs
+	return render(request, 'blog/category_detail.html', {'posts': posts, 'category':category,'tableFilter': tableFilter})
 
 def category_edit(request, slug):
 	category = get_object_or_404(Category, slug=slug)
