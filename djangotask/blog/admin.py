@@ -73,6 +73,14 @@ class AppoitmentAdmin(admin.ModelAdmin):
 	]
 	
 	list_display = ('name', 'text','date','slot')
+
+class UservisitedAdmin(admin.ModelAdmin):
+	fieldsets = [
+		(None, {'fields': ['user','url']})
+
+	]
+	
+	list_display = ('user','url')
 		
 
 
@@ -81,3 +89,4 @@ admin.site.register(Post,PostAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag,TagAdmin)
 admin.site.register(Appoitment,AppoitmentAdmin)
+admin.site.register(Uservisited,UservisitedAdmin)

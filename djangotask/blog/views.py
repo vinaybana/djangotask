@@ -9,14 +9,17 @@ from django.contrib.auth import get_user_model
 import random
 import numpy as np
 from .api import PostFilter
+from .decorators import save_user
 User = get_user_model()
 
 # Create your views here.
 
+@save_user
 def category_list(request):
 	categories=Category.objects.all()
 	return render(request, 'blog/category_list.html', {'categories':categories})
 
+@save_user
 def category_detail(request,slug):
 	category = get_object_or_404(Category, slug=slug)
 	posts= Post.objects.filter(category=category)
@@ -24,6 +27,7 @@ def category_detail(request,slug):
 	# posts = myFilter.qs
 	return render(request, 'blog/category_detail.html', {'posts': posts, 'category':category,'tableFilter': tableFilter})
 
+@save_user
 def category_edit(request, slug):
 	category = get_object_or_404(Category, slug=slug)
 	if request.method == "POST":
@@ -37,10 +41,12 @@ def category_edit(request, slug):
 		form = CategoryForm(instance=category)
 	return render(request, 'blog/category_edit.html', {'form': form})
 
+@save_user
 def post_list(request):
 	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 	return render(request, 'blog/post_list.html', {'posts': posts})
 
+@save_user
 def post_detail(request, slug):
 	post = get_object_or_404(Post, slug=slug)
 	# comments=Comment.objects.filter(post=post, parent=None)
@@ -63,6 +69,7 @@ def post_detail(request, slug):
 	# 	form = CommentForm()
 	return render(request, 'blog/post_details.html', {'post': post})
 
+@save_user
 def post_new(request):
 	if request.method == "POST":
 		form = PostForm(request.POST)
@@ -77,6 +84,7 @@ def post_new(request):
 		form = PostForm()
 	return render(request, 'blog/post_edit.html', {'form': form})
 
+@save_user
 def post_edit(request, slug):
 	post = get_object_or_404(Post, slug=slug)
 	if request.method == "POST":
@@ -91,12 +99,13 @@ def post_edit(request, slug):
 		form = PostForm(instance=post)
 	return render(request, 'blog/post_edit.html', {'form': form})
 
+@save_user
 def tag_list(request):
 	tags= Tag.objects.all()
 	print(tags)
 	return render(request, 'blog/tag_list.html', {'tags':tags})
 
-
+@save_user
 def tag_details(request, slug):
 	tag = get_object_or_404(Tag, slug=slug)
 	print(tag)
@@ -137,6 +146,7 @@ def userdetail(request, pk):
 	# userimg=  Userprofile.objects.filter(user= request.user).first()
 	return render(request, 'blog/userdetail.html',{'user':user})
 
+
 def randomlist():
 	random_list = np.random.randint(60, size=(87))
 	return random_list
@@ -145,6 +155,7 @@ def uniquelist(random_list):
 	unique_list = list(set(random_list))
 	return unique_list
 
+@save_user
 def main(request):
     random_list = randomlist()
     unique_list = uniquelist(random_list)

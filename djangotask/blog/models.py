@@ -83,3 +83,19 @@ class Appoitment(models.Model):
 
 	def __str__(self):
 		return str(self.name)
+
+class Uservisited(models.Model):
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
+	url = models.URLField(max_length = 200)
+
+	def __str__(self):
+		return str(self.user.username)
+
+class Company(models.Model):
+	user = models.ForeignKey('User', on_delete=models.CASCADE)
+	name = models.CharField(max_length=100, verbose_name="company name")
+	address = models.CharField(max_length=100, verbose_name="company address")
+	position = models.CharField(max_length=100, verbose_name="employee position")
+
+	def __str__(self):
+		return str(self.name)

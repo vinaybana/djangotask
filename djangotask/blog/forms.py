@@ -1,7 +1,7 @@
 from django import forms
-from .models import Post,Category
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import *
+# from django.contrib.auth.models import User
+# from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm
 
 class PostForm(forms.ModelForm):
@@ -16,3 +16,11 @@ class categoryForm(forms.ModelForm):
 		model = Category
 		fields=('title' , 'text',)
 
+class CompanyForm(forms.ModelForm):
+    class Meta:
+        model = Company
+        fields = ('user', 'name', 'address', 'position',)
+
+    def __init__(self, user, *args, **kwargs):
+        super(CompanyForm, self).__init__(*args, **kwargs)
+        self.fields['user'].queryset = User.objects.filter(user=user)
