@@ -123,19 +123,19 @@ def sign_up(request):
 	context['form']=form
 	return render(request,'blog/sign_up.html',context)
 
-def login(request):
+def login_user(request):
 
 	if request.method == "POST":
 		username = request.POST.get('username')
 		password = request.POST.get('password')
-		user = auth.authenticate(username=username, password=password)
+		user = authenticate(username=username, password=password)
 		if user is not None:
-			auth.login(request, user)
+			login(request,user)
 			return render(request, 'blog/post_list.html')
 	else:
 		return render(request, 'blog/login.html')
 
-def logout(request):
+def logout_user(request):
 	logout(request)
 	return render(request, 'blog/post_list.html')
 

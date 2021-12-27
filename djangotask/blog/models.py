@@ -21,6 +21,11 @@ class User(AbstractUser):
 	class Meta:
 		verbose_name_plural = "01. Users"
 
+class Agency(User):
+	aggency_name = models.CharField(max_length=15, blank=True, null=True)
+
+	class Meta:
+		verbose_name_plural = "01. Agency"
 
 class Category(models.Model):
 	title= models.CharField(max_length=200)

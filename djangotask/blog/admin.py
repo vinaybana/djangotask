@@ -19,6 +19,21 @@ class CustomUserAdmin(UserAdmin):
 		(None, {'fields': ('email', 'username', 'mobile', 'first_name', 'last_name', 'password',)}),
 		('Personal info', {'fields': ('image','role', 'gender' )})]
 
+class AgencyAdmin(UserAdmin):
+	ordering = ('-id',)
+	list_display_links = ('username', 'mobile')
+	list_display = ['username', 'email','aggency_name', 'mobile', 'gender', 'first_name', 'last_name', 'role']
+	search_fields = ['username','email', 'mobile', 'gender', 'first_name', 'last_name', 'role']
+	# add_fieldsets = (
+	# 	(None, {
+	# 		'classes': ('wide', 'extrapretty'),
+	# 		'fields': ('first_name', 'last_name', 'email', 'mobile', 'username', 'password1', 'password2' ),
+	# 	}),
+	# )
+	fieldsets = [
+		(None, {'fields': ('email', 'username', 'aggency_name','mobile', 'first_name', 'last_name', 'password',)}),
+		('Personal info', {'fields': ('image','role', 'gender' )})]
+
 class PostAdmin(admin.ModelAdmin):
 		
 	view_on_site = True
@@ -85,6 +100,7 @@ class UservisitedAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Agency, AgencyAdmin)
 admin.site.register(Post,PostAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag,TagAdmin)
